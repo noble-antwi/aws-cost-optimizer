@@ -1,0 +1,100 @@
+# AWS Cost Optimizer Configuration
+
+# AWS Settings
+aws:
+  # Leave empty to use default AWS CLI profile
+  profile: ""
+  
+  # Regions to analyze (empty list = all regions)
+  regions:
+    - us-east-1
+    - us-west-2
+  
+  # Set to true to analyze all available regions
+  analyze_all_regions: false
+
+# EC2 Analysis Settings
+ec2:
+  # CPU utilization threshold (percentage)
+  # Instances below this threshold are considered idle
+  cpu_threshold: 5.0
+  
+  # Analysis period in days
+  analysis_period_days: 7
+  
+  # CloudWatch metric evaluation period (minutes)
+  metric_period_minutes: 60
+  
+  # Minimum uptime to consider (hours)
+  # Instances running less than this are excluded
+  minimum_uptime_hours: 24
+
+# EBS Volume Settings
+ebs:
+  # Volumes unattached for this many days are flagged
+  unattached_days_threshold: 7
+  
+  # Include volumes with DeleteOnTermination tag
+  include_delete_on_termination: false
+
+# Snapshot Settings
+snapshots:
+  # Snapshots older than this are considered outdated
+  retention_days: 90
+  
+  # Exclude snapshots used by AMIs
+  exclude_ami_snapshots: true
+
+# Cost Calculation
+pricing:
+  # Pricing data file (relative to config directory)
+  pricing_file: "pricing.yaml"
+  
+  # Default region for pricing (if not specified)
+  default_pricing_region: "us-east-1"
+
+# Report Settings
+reports:
+  # Output directory for reports
+  output_dir: "reports"
+  
+  # Report formats to generate
+  formats:
+    - json
+    - csv
+    - html
+  
+  # Include detailed resource information
+  include_details: true
+  
+  # Include cost breakdown charts in HTML report
+  include_charts: true
+
+# Notification Settings (Optional)
+notifications:
+  enabled: false
+  
+  # Email notifications
+  email:
+    enabled: false
+    smtp_host: "smtp.gmail.com"
+    smtp_port: 587
+    sender: "your-email@example.com"
+    recipients:
+      - "admin@example.com"
+  
+  # Slack notifications
+  slack:
+    enabled: false
+    webhook_url: ""
+    channel: "#aws-cost-alerts"
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  file: "logs/cost-optimizer.log"
+  console: true
+
+# Dry Run Mode
+# When true, no changes are made (analysis only)
+dry_run: true
