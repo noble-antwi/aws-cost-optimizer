@@ -6,7 +6,7 @@ Thank you for your interest in contributing to AWS Cost Optimizer! This document
 
 ### 1. Fork and Clone
 ```bash
-git clone https://github.com/yourusername/aws-cost-optimizer.git
+git clone https://github.com/noble-antwi/aws-cost-optimizer.git
 cd aws-cost-optimizer
 ```
 

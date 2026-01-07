@@ -29,7 +29,7 @@ A Python-based CLI tool that analyzes AWS resources and identifies cost optimiza
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/aws-cost-optimizer.git
+git clone https://github.com/noble-antwi/aws-cost-optimizer.git
 cd aws-cost-optimizer
 
 # Create virtual environment
