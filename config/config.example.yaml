@@ -47,8 +47,8 @@ snapshots:
 
 # Cost Calculation
 pricing:
-  # Pricing data file (relative to config directory)
-  pricing_file: "pricing.yaml"
+  # Pricing data file (relative to project root)
+  pricing_file: "config/pricing.yaml"
   
   # Default region for pricing (if not specified)
   default_pricing_region: "us-east-1"
