@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Cost Optimizer - Architecture Diagram Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #232f3e;
+            border-bottom: 3px solid #ff9900;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #232f3e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 4px solid #ff9900;
+        }
+        h3 {
+            color: #545b64;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .diagram-box {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            margin: 20px 0;
+            white-space: pre;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th {
+            background-color: #232f3e;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        tr:hover {
+            background-color: #fff8e1;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9900;
+            margin: 20px 0;
+        }
+        .step-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: #ff9900;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+        }
+        .color-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        .aws-orange { background-color: #ff9900; }
+        .blue { background-color: #3498db; }
+        .purple { background-color: #9b59b6; }
+        .green { background-color: #27ae60; }
+        .gray { background-color: #7f8c8d; }
+        .section {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tool-link {
+            display: inline-block;
+            background-color: #ff9900;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px;
+            font-weight: bold;
+        }
+        .tool-link:hover {
+            background-color: #e8890c;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🏗️ AWS Cost Optimizer - Architecture Diagram Guide</h1>
+    
+    <div class="highlight">
+        <strong>Purpose:</strong> This guide will help you create a professional architecture diagram for the AWS Cost Optimizer project using Draw.io.
+    </div>
+
+    <h2>📊 Complete Application Flow Diagram</h2>
+    
+    <p>Here is the accurate flow of the AWS Cost Optimizer application:</p>
+    
+    <div class="diagram-box">
+┌──────────────────────────────────────────────────────────────────────────┐
+│                                                                          │
+│   ┌─────────────┐      ┌─────────────────────────────────────────────┐  │
+│   │    User     │      │            AWS Cost Optimizer               │  │
+│   │  runs CLI   │─────▶│                                             │  │
+│   └─────────────┘      │  ┌─────────────┐    ┌──────────────────┐   │  │
+│                        │  │Config Loader│───▶│   config.yaml    │   │  │
+│                        │  └─────────────┘    └──────────────────┘   │  │
+│                        │                                             │  │
+│                        │  ┌─────────────────────────────────────┐   │  │
+│                        │  │           Analyzers                  │   │  │
+│                        │  │  • EC2 Analyzer                      │   │  │
+│                        │  │  • EBS Analyzer                      │   │  │
+│                        │  │  • Snapshot Analyzer                 │   │  │
+│                        │  └──────────────┬──────────────────────┘   │  │
+│                        └─────────────────┼───────────────────────────┘  │
+│                                          │                               │
+│                                          │ Boto3 API Calls               │
+│                                          ▼                               │
+│   ┌──────────────────────────────────────────────────────────────────┐  │
+│   │                         AWS Cloud                                 │  │
+│   │                                                                   │  │
+│   │   ┌─────────┐   ┌─────────┐   ┌──────────┐   ┌──────────────┐   │  │
+│   │   │   EC2   │   │   EBS   │   │Snapshots │   │  CloudWatch  │   │  │
+│   │   │Instances│   │ Volumes │   │          │   │   Metrics    │   │  │
+│   │   └────┬────┘   └────┬────┘   └────┬─────┘   └──────┬───────┘   │  │
+│   │        │             │             │                │            │  │
+│   └────────┼─────────────┼─────────────┼────────────────┼────────────┘  │
+│            │             │             │                │                │
+│            └─────────────┴──────┬──────┴────────────────┘                │
+│                                 │                                        │
+│                                 │ API Response Data                      │
+│                                 ▼                                        │
+│   ┌─────────────────────────────────────────────────────────────────┐   │
+│   │                    AWS Cost Optimizer                            │   │
+│   │                                                                  │   │
+│   │   ┌─────────────────┐        ┌─────────────────────────────┐    │   │
+│   │   │ Cost Calculator │───────▶│      Report Generators      │    │   │
+│   │   │ (pricing.yaml)  │        │  • JSON Reporter            │    │   │
+│   │   └─────────────────┘        │  • CSV Reporter             │    │   │
+│   │                              │  • HTML Reporter            │    │   │
+│   │                              └──────────────┬──────────────┘    │   │
+│   └─────────────────────────────────────────────┼────────────────────┘   │
+│                                                 │                        │
+│                                                 ▼                        │
+│                              ┌─────────────────────────────────┐        │
+│                              │        Output Reports           │        │
+│                              │   📄 JSON  │  📊 CSV  │  🌐 HTML │        │
+│                              └─────────────────────────────────┘        │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+    </div>
+
+    <h2>📝 Simplified Version (Recommended for README)</h2>
+    
+    <div class="diagram-box">
+┌─────────┐     ┌────────────────────────────────────┐     ┌─────────────────┐
+│  User   │────▶│      AWS Cost Optimizer CLI        │────▶│  AWS Cloud      │
+│         │     │                                    │     │                 │
+└─────────┘     │  1. Load Config                    │     │  • EC2          │
+                │  2. Run Analyzers ─────────────────┼────▶│  • EBS          │
+                │  3. Calculate Costs                │◀────│  • Snapshots    │
+                │  4. Generate Reports               │     │  • CloudWatch   │
+                └──────────────┬─────────────────────┘     └─────────────────┘
+                               │
+                               ▼
+                ┌─────────────────────────────────┐
+                │         Output Reports          │
+                │    JSON   │   CSV   │   HTML    │
+                └─────────────────────────────────┘
+    </div>
+
+    <h2>🔧 Recommended Tools</h2>
+    
+    <div class="section">
+        <a href="https://app.diagrams.net/" class="tool-link" target="_blank">Draw.io (Recommended)</a>
+        <a href="https://excalidraw.com/" class="tool-link" target="_blank">Excalidraw</a>
+        <a href="https://www.lucidchart.com/" class="tool-link" target="_blank">Lucidchart</a>
+    </div>
+
+    <h2>🚀 Step-by-Step Application Flow</h2>
+    
+    <div class="step-box">
+        <span class="step-number">1</span>
+        <strong>User runs CLI command</strong><br>
+        <code>python src/main.py --region us-east-1</code>
+    </div>
+    
+    <div class="step-box">
+        <span class="step-number">2</span>
+        <strong>Tool loads configuration</strong><br>
+        Reads <code>config.yaml</code> for thresholds and settings
+    </div>
+    
+    <div class="step-box">
+        <span class="step-number">3</span>
+        <strong>Analyzers make Boto3 API calls to AWS</strong><br>
+        EC2, EBS, and Snapshot analyzers query AWS resources
+    </div>
+    
+    <div class="step-box">
+        <span class="step-number">4</span>
+        <strong>AWS returns data</strong><br>
+        Instance details, volume info, snapshot metadata, CloudWatch metrics
+    </div>
+    
+    <div class="step-box">
+        <span class="step-number">5</span>
+        <strong>Cost Calculator estimates savings</strong><br>
+        Uses <code>pricing.yaml</code> for cost calculations
+    </div>
+    
+    <div class="step-box">
+        <span class="step-number">6</span>
+        <strong>Report Generators create output files</strong><br>
+        JSON, CSV, and HTML reports are generated
+    </div>
+    
+    <div class="step-box">
+        <span class="step-number">7</span>
+        <strong>User reviews reports</strong><br>
+        Reports saved to <code>reports/</code> folder
+    </div>
+
+    <h2>🎨 Draw.io Shapes Reference</h2>
+
+    <h3>Stage 1: User / CLI Entry Point</h3>
+    <table>
+        <tr>
+            <th>Component</th>
+            <th>Draw.io Shape</th>
+            <th>Search Term</th>
+        </tr>
+        <tr>
+            <td>User</td>
+            <td>Person icon or Actor</td>
+            <td><code>user</code> or <code>actor</code></td>
+        </tr>
+        <tr>
+            <td>Terminal/CLI</td>
+            <td>Rectangle with rounded corners</td>
+            <td>General shapes</td>
+        </tr>
+        <tr>
+            <td>Config file</td>
+            <td>Document icon</td>
+            <td><code>document</code></td>
+        </tr>
+    </table>
+
+    <h3>Stage 2: AWS Cost Optimizer (Application)</h3>
+    <table>
+        <tr>
+            <th>Component</th>
+            <th>Draw.io Shape</th>
+            <th>Search Term</th>
+        </tr>
+        <tr>
+            <td>Main container</td>
+            <td>Large Rectangle with border</td>
+            <td>General → Rectangle</td>
+        </tr>
+        <tr>
+            <td>Config Loader</td>
+            <td>Small Rectangle</td>
+            <td>General shapes</td>
+        </tr>
+        <tr>
+            <td>Analyzers box</td>
+            <td>Rectangle with stacked lines</td>
+            <td><code>component</code></td>
+        </tr>
+        <tr>
+            <td>Cost Calculator</td>
+            <td>Rectangle or Process</td>
+            <td>General shapes</td>
+        </tr>
+        <tr>
+            <td>Report Generators</td>
+            <td>Rectangle</td>
+            <td>General shapes</td>
+        </tr>
+    </table>
+
+    <h3>Stage 3: AWS Cloud Services</h3>
+    <table>
+        <tr>
+            <th>Component</th>
+            <th>Draw.io Shape</th>
+            <th>Search Term</th>
+        </tr>
+        <tr>
+            <td>AWS Cloud container</td>
+            <td>AWS Cloud shape (orange border)</td>
+            <td><code>AWS Cloud</code></td>
+        </tr>
+        <tr>
+            <td>EC2 Instances</td>
+            <td>AWS EC2 icon (orange)</td>
+            <td><code>EC2</code></td>
+        </tr>
+        <tr>
+            <td>EBS Volumes</td>
+            <td>AWS EBS icon</td>
+            <td><code>EBS</code> or <code>Elastic Block Store</code></td>
+        </tr>
+        <tr>
+            <td>Snapshots</td>
+            <td>AWS EBS Snapshot icon</td>
+            <td><code>snapshot</code></td>
+        </tr>
+        <tr>
+            <td>CloudWatch</td>
+            <td>AWS CloudWatch icon</td>
+            <td><code>CloudWatch</code></td>
+        </tr>
+    </table>
+
+    <h3>Stage 4: Output Reports</h3>
+    <table>
+        <tr>
+            <th>Component</th>
+            <th>Draw.io Shape</th>
+            <th>Search Term</th>
+        </tr>
+        <tr>
+            <td>Reports container</td>
+            <td>Rectangle</td>
+            <td>General shapes</td>
+        </tr>
+        <tr>
+            <td>JSON file</td>
+            <td>Document icon</td>
+            <td><code>document</code></td>
+        </tr>
+        <tr>
+            <td>CSV file</td>
+            <td>Document or Table icon</td>
+            <td><code>document</code></td>
+        </tr>
+        <tr>
+            <td>HTML file</td>
+            <td>Document or Browser icon</td>
+            <td><code>browser</code></td>
+        </tr>
+    </table>
+
+    <h3>Arrows / Connectors</h3>
+    <table>
+        <tr>
+            <th>Connection Type</th>
+            <th>Draw.io Tool</th>
+            <th>Style</th>
+        </tr>
+        <tr>
+            <td>Data flow</td>
+            <td>Arrow</td>
+            <td>Solid line with arrow</td>
+        </tr>
+        <tr>
+            <td>API calls (to AWS)</td>
+            <td>Dashed arrow</td>
+            <td>Right-click → Style → Dashed</td>
+        </tr>
+        <tr>
+            <td>API response</td>
+            <td>Dashed arrow (different color)</td>
+            <td>Use blue or green</td>
+        </tr>
+        <tr>
+            <td>Output</td>
+            <td>Solid arrow</td>
+            <td>Black or gray</td>
+        </tr>
+    </table>
+
+    <h2>🎨 Recommended Color Scheme</h2>
+    
+    <table>
+        <tr>
+            <th>Component</th>
+            <th>Color</th>
+            <th>Preview</th>
+        </tr>
+        <tr>
+            <td>User</td>
+            <td>Gray or Blue</td>
+            <td><span class="color-box gray"></span><span class="color-box blue"></span></td>
+        </tr>
+        <tr>
+            <td>Your Application</td>
+            <td>Blue or Purple</td>
+            <td><span class="color-box blue"></span><span class="color-box purple"></span></td>
+        </tr>
+        <tr>
+            <td>AWS Cloud</td>
+            <td>Orange (#FF9900 - AWS brand)</td>
+            <td><span class="color-box aws-orange"></span></td>
+        </tr>
+        <tr>
+            <td>Outputs/Reports</td>
+            <td>Green</td>
+            <td><span class="color-box green"></span></td>
+        </tr>
+        <tr>
+            <td>Arrows to AWS</td>
+            <td>Orange (dashed)</td>
+            <td><span class="color-box aws-orange"></span></td>
+        </tr>
+        <tr>
+            <td>Arrows from AWS</td>
+            <td>Blue (dashed)</td>
+            <td><span class="color-box blue"></span></td>
+        </tr>
+    </table>
+
+    <h2>📐 Draw.io Setup Instructions</h2>
+    
+    <div class="section">
+        <h3>Enable AWS Shapes</h3>
+        <ol>
+            <li>Go to <a href="https://app.diagrams.net/" target="_blank">draw.io</a></li>
+            <li>Click <strong>"More Shapes"</strong> at the bottom of left panel</li>
+            <li>Find and enable <strong>"AWS19"</strong> or <strong>"AWS"</strong></li>
+            <li>Click <strong>"Apply"</strong></li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h3>Quick Search Terms</h3>
+        <div class="diagram-box" style="font-size: 14px;">
+User/Actor:     "user", "actor", "person"
+AWS Cloud:      "aws cloud"
+EC2:            "ec2", "instance"
+EBS:            "ebs", "volume", "block store"
+Snapshots:      "snapshot"
+CloudWatch:     "cloudwatch", "monitoring"
+Documents:      "document", "file"
+Containers:     "rectangle", "container"
+Arrows:         Use the connector tool (click edge of shape and drag)
+        </div>
+    </div>
+
+    <h2>📤 Export Settings</h2>
+    
+    <div class="highlight">
+        <strong>Recommended export settings:</strong>
+        <ul style="margin-top: 10px; margin-left: 20px;">
+            <li>Format: <strong>PNG</strong></li>
+            <li>Width: <strong>1200px</strong> (good quality for GitHub)</li>
+            <li>Background: <strong>White</strong> or <strong>Transparent</strong></li>
+            <li>Save to: <code>assets/images/architecture-diagram.png</code></li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>AWS Cost Optimizer - Architecture Diagram Guide</p>
+        <p>Created by Noble Antwi | January 2026</p>
+    </footer>
+
+</body>
+</html>
