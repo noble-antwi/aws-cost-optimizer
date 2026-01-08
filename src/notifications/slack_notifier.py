@@ -100,7 +100,7 @@ class SlackNotifier:
                 resources = combined_results[resource_type].get('resources', [])
                 if resources:
                     count = len(resources)
-                    savings = combined_results[resource_type].get('total_monthly_savings', 0)
+                    savings = combined_results[resource_type].get('total_savings', 0)
                     total_findings += count
                     total_monthly_savings += savings
                     
@@ -129,7 +129,7 @@ class SlackNotifier:
                 "type": "header",
                 "text": {
                     "type": "plain_text",
-                    "text": "🚀 AWS Cost Optimization Report",
+                    "text": "AWS Cost Optimization Report",
                     "emoji": True
                 }
             },
@@ -139,7 +139,7 @@ class SlackNotifier:
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": f"📊 *Analysis completed at:* {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}"
+                    "text": f"*Analysis completed at:* {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}"
                 }
             },
             
@@ -157,15 +157,15 @@ class SlackNotifier:
                     },
                     {
                         "type": "mrkdwn",
-                        "text": f"*Monthly Savings Potential*\n💰 ${total_monthly_savings:.2f}"
+                        "text": f"*Monthly Savings Potential*\n${total_monthly_savings:.2f}"
                     },
                     {
                         "type": "mrkdwn",
-                        "text": f"*Annual Savings Potential*\n📈 ${total_annual_savings:.2f}"
+                        "text": f"*Annual Savings Potential*\n${total_annual_savings:.2f}"
                     },
                     {
                         "type": "mrkdwn",
-                        "text": f"*Status*\n{'✅ Issues Found' if total_findings > 0 else '✓ All Clear'}"
+                        "text": f"*Status*\n{'✓ Issues Found' if total_findings > 0 else '✓ All Clear'}"
                     }
                 ]
             },
@@ -181,7 +181,7 @@ class SlackNotifier:
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "*📋 Detailed Findings:*"
+                    "text": "*Detailed Findings*"
                 }
             })
             blocks.extend(finding_sections)
@@ -196,7 +196,7 @@ class SlackNotifier:
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "🎯 *Recommended Actions:*\n• Review identified idle resources\n• Verify they are not needed\n• Stop or delete to reduce costs\n• Monitor for future optimization opportunities"
+                    "text": "*Recommended Actions*\n• Review identified idle resources\n• Verify they are not needed\n• Stop or delete to reduce costs\n• Monitor for future optimization opportunities"
                 }
             })
             
