@@ -176,6 +176,48 @@ All reports are generated automatically and saved in timestamped directories:
 
 ---
 
+## Slack Notifications (Optional)
+
+Get real-time alerts in Slack when the analysis completes! 🚀
+
+### Setup Slack Webhook
+
+1. **Open your Slack workspace** → Settings & administration → Apps & integrations
+2. **Search for "Incoming Webhooks"** and click → Install
+3. **Create New Webhook** → Select your target channel
+4. **Copy the Webhook URL** - it looks like: `https://hooks.slack.com/services/XXXXX/XXXXX/XXXXX`
+
+### Enable in Config
+
+Edit `config/config.yaml`:
+
+```yaml
+notifications:
+  slack:
+    webhook_url: "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
+```
+
+That's it! Now every time you run the tool, findings will be posted to your Slack channel:
+
+```
+🚀 AWS Cost Optimization Analysis
+2026-01-07 20:42:37
+
+📊 Findings Summary:
+  💤 Idle EC2 Instances: 2 ($15.18/month)
+  💾 Unattached EBS Volumes: 1 ($4.00/month)
+  📸 Outdated Snapshots: 1 ($2.50/month)
+  🌐 Unused Elastic IPs: 1 ($3.65/month)
+  🗄️  Idle RDS Databases: 1 ($14.01/month)
+
+💰 Total Potential Savings:
+$39.34/month ($472.13/year)
+```
+
+**Note**: Slack notifications are completely optional. If no webhook URL is configured, the tool works perfectly without them.
+
+---
+
 ## Architecture
 
 ![Architecture Diagram](assets/images/architecture-diagram.png)

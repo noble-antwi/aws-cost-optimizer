@@ -23,6 +23,7 @@ from utils.aws_client import AWSClientManager
 from reports.json_reporter import JSONReporter
 from reports.csv_reporter import CSVReporter
 from reports.html_reporter import HTMLReporter
+from notifications.slack_notifier import SlackNotifier
 
 console = Console()
 
@@ -226,6 +227,17 @@ def main(config, profile, region, all_regions, resource_type, dry_run, output_fo
                 reporter = HTMLReporter(report_dir)
                 reporter.generate(all_results, combined_results)
                 console.print(f"✓ HTML report generated")
+        
+        # Send Slack notification if configured
+        try:
+            slack_config = app_config.get('notifications', {}).get('slack', {})
+            webhook_url = slack_config.get('webhook_url', '').strip()
+            
+            if webhook_url:
+                slack_notifier = SlackNotifier(webhook_url)
+                slack_notifier.send_findings(combined_results)
+        except Exception as e:
+            logger.warning(f"Failed to send Slack notification: {str(e)}")
         
         console.print(f"\n[bold green]Analysis complete![/bold green] 🎉\n")
         
