@@ -8,6 +8,11 @@ output "idle_ec2_instance_id" {
   value       = aws_instance.idle.id
 }
 
+output "rds_load_generator_id" {
+  description = "ID of the RDS load generator EC2 instance"
+  value       = aws_instance.rds_load_generator.id
+}
+
 output "attached_ebs_volume_id" {
   description = "ID of the attached EBS volume"
   value       = aws_ebs_volume.attached.id

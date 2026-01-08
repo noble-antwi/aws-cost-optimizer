@@ -33,7 +33,18 @@ resource "aws_subnet" "main" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "cost-optimizer-test-subnet"
+    Name = "cost-optimizer-test-subnet-1"
+  }
+}
+
+resource "aws_subnet" "secondary" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.2.0/24"
+  availability_zone       = data.aws_availability_zones.available.names[1]
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "cost-optimizer-test-subnet-2"
   }
 }
 
@@ -225,14 +236,14 @@ resource "aws_eip" "unassociated" {
 # DB Subnet Group
 resource "aws_db_subnet_group" "main" {
   name       = "cost-optimizer-db-subnet-group"
-  subnet_ids = [aws_subnet.main.id]
+  subnet_ids = [aws_subnet.main.id, aws_subnet.secondary.id]
 
   tags = {
     Name = "cost-optimizer-db-subnet-group"
   }
 }
 
-# Active RDS instance (with connections)
+# Active RDS instance (with connections and query load)
 resource "aws_db_instance" "active" {
   identifier            = "cost-optimizer-active-db"
   engine                = "mysql"
@@ -278,6 +289,68 @@ resource "aws_db_instance" "idle" {
     TestType       = "idle"
     CostOptimizer  = "test"
   }
+}
+
+# EC2 instance to generate load on active RDS (client)
+resource "aws_instance" "rds_load_generator" {
+  ami                    = data.aws_ami.amazon_linux_2.id
+  instance_type          = "t3.micro"
+  subnet_id              = aws_subnet.main.id
+  vpc_security_group_ids = [aws_security_group.test.id]
+
+  tags = {
+    Name           = "cost-optimizer-rds-load-generator"
+    TestType       = "rds-client"
+    CostOptimizer  = "test"
+  }
+
+  user_data = base64encode(<<-EOF
+              #!/bin/bash
+              set -e
+              yum update -y
+              yum install -y mysql
+              
+              # Log everything
+              exec > /tmp/rds_load.log 2>&1
+              echo "Starting RDS load generator at $(date)"
+              
+              # Wait for active RDS to be ready (increased to 120 seconds)
+              ACTIVE_DB_HOST="${aws_db_instance.active.address}"
+              DB_USER="admin"
+              DB_PASS='${var.rds_password}'
+              DB_NAME="testdb"
+              
+              echo "Waiting for RDS to be ready..."
+              sleep 120
+              
+              echo "Attempting to connect to RDS at $ACTIVE_DB_HOST"
+              
+              # Test connection first
+              for i in {1..10}; do
+                echo "Connection attempt $i..."
+                if mysql -h "$ACTIVE_DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "SELECT 1;" 2>/dev/null; then
+                  echo "Successfully connected to RDS!"
+                  break
+                fi
+                sleep 10
+              done
+              
+              # Generate continuous load
+              echo "Starting load generation at $(date)"
+              while true; do
+                # Run a query to generate CPU load
+                mysql -h "$ACTIVE_DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" \
+                  -e "SELECT BENCHMARK(5000000, MD5('load-test'));" 2>/dev/null || echo "Query failed at $(date)"
+                
+                # Log activity
+                echo "Query executed at $(date)"
+                
+                sleep 2
+              done
+              EOF
+  )
+
+  depends_on = [aws_db_instance.active]
 }
 
 # ============================================================================
