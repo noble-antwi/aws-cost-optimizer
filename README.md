@@ -18,6 +18,12 @@ A Python-based CLI tool that analyzes AWS resources and identifies cost optimiza
 
 ---
 
+## Architecture
+
+![AWS Cost Optimizer Architecture](assets/images/architecture-diagram.png)
+
+---
+
 ## Quick Start
 
 ### Prerequisites
