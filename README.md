@@ -220,12 +220,6 @@ $39.34/month ($472.13/year)
 
 ---
 
-## Architecture
-
-![Architecture Diagram](assets/images/architecture-diagram.png)
-
----
-
 ## IAM Permissions
 
 Create an IAM policy with these permissions:
