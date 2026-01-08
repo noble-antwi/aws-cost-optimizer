@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue)](https://www.python.org/) [![AWS](https://img.shields.io/badge/AWS-Boto3-orange)](https://boto3.amazonaws.com/) [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-A Python-based CLI tool that analyzes AWS resources and identifies cost optimization opportunities by detecting **idle EC2 instances**, **unattached EBS volumes**, and **outdated snapshots**.
+A Python-based CLI tool that analyzes AWS resources and identifies cost optimization opportunities by detecting **idle EC2 instances**, **unattached EBS volumes**, **outdated snapshots**, **unused Elastic IPs**, and **idle RDS databases**.
 
 ![HTML Report](assets/images/06_html-report-generated.png)
 
@@ -15,6 +15,8 @@ A Python-based CLI tool that analyzes AWS resources and identifies cost optimiza
 | **EC2 Instances** | CPU utilization < 5% over 7 days | Stop or rightsize |
 | **EBS Volumes** | Unattached for configurable days | Delete unused volumes |
 | **Snapshots** | Older than retention period (default: 90 days) | Remove outdated backups |
+| **Elastic IPs** | Not associated with any resource | Release unused IPs (~$3.60/month each) |
+| **RDS Instances** | CPU < 5% and < 1 connection over 7 days | Stop or downsize |
 
 ---
 
@@ -29,7 +31,7 @@ A Python-based CLI tool that analyzes AWS resources and identifies cost optimiza
 ### Prerequisites
 - Python 3.8+
 - AWS CLI configured with credentials
-- IAM permissions for EC2, EBS, CloudWatch (see [IAM Policy](#-iam-permissions))
+- IAM permissions for EC2, EBS, RDS, CloudWatch (see [IAM Policy](#-iam-permissions))
 
 ### Installation
 
@@ -143,6 +145,8 @@ Create an IAM policy with these permissions:
         "ec2:DescribeVolumes",
         "ec2:DescribeSnapshots",
         "ec2:DescribeRegions",
+        "ec2:DescribeAddresses",
+        "rds:DescribeDBInstances",
         "cloudwatch:GetMetricStatistics"
       ],
       "Resource": "*"
@@ -162,7 +166,7 @@ Options:
   --profile TEXT      AWS profile name (default: default)
   --region TEXT       AWS region to analyze
   --all-regions       Analyze all available AWS regions
-  --resource-type     Filter: ec2, ebs, or snapshots
+  --resource-type     Filter: ec2, ebs, snapshots, eip, or rds
   --output-format     Report format: json, csv, or html
   --dry-run           Preview mode (default behavior)
   --help              Show help message
@@ -177,8 +181,8 @@ Options:
 - [x] Outdated snapshot identification
 - [x] Multi-region support
 - [x] HTML/JSON/CSV reports
-- [ ] Elastic IP analysis
-- [ ] RDS idle database detection
+- [x] Elastic IP analysis
+- [x] RDS idle database detection
 - [ ] Slack/Email notifications
 - [ ] Lambda function deployment
 - [ ] Automated remediation

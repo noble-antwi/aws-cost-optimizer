@@ -45,6 +45,27 @@ snapshots:
   # Exclude snapshots used by AMIs
   exclude_ami_snapshots: true
 
+# Elastic IP Settings
+elastic_ip:
+  # Analyze unused Elastic IPs
+  enabled: true
+
+# RDS Settings
+rds:
+  # CPU utilization threshold (percentage)
+  # RDS instances below this threshold are considered idle
+  cpu_threshold: 5.0
+  
+  # Database connections threshold
+  # RDS instances with fewer average connections are flagged
+  connections_threshold: 1
+  
+  # Analysis period in days
+  analysis_period_days: 7
+  
+  # Minimum uptime to consider (hours)
+  minimum_uptime_hours: 24
+
 # Cost Calculation
 pricing:
   # Pricing data file (relative to project root)

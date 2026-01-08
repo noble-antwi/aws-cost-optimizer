@@ -120,6 +120,99 @@ class CostCalculator:
         
         return monthly_cost
     
+    def calculate_eip_cost(self, region):
+        """
+        Calculate Elastic IP cost (charged when not associated)
+        
+        Args:
+            region (str): AWS region
+            
+        Returns:
+            float: Monthly cost in USD
+        """
+        pricing = self.get_region_pricing(region, 'elastic_ip')
+        hourly_rate = pricing.get('unassociated', 0.005)  # ~$0.005/hour when not associated
+        monthly_cost = hourly_rate * self.hours_per_month
+        
+        logger.debug(f"Elastic IP cost in {region}: ${monthly_cost:.2f}/month")
+        
+        return monthly_cost
+    
+    def calculate_rds_cost(self, instance_class, engine, region, multi_az=False, 
+                           storage_type='gp2', allocated_storage=0):
+        """
+        Calculate RDS instance cost
+        
+        Args:
+            instance_class (str): RDS instance class (e.g., db.t3.micro)
+            engine (str): Database engine (mysql, postgres, etc.)
+            region (str): AWS region
+            multi_az (bool): Whether Multi-AZ is enabled
+            storage_type (str): Storage type (gp2, gp3, io1)
+            allocated_storage (int): Allocated storage in GB
+            
+        Returns:
+            float: Monthly cost in USD
+        """
+        pricing = self.get_region_pricing(region, 'rds')
+        
+        # Get instance pricing
+        instance_pricing = pricing.get('instances', {})
+        hourly_rate = instance_pricing.get(instance_class, 0.0)
+        
+        if hourly_rate == 0.0:
+            # Try to estimate based on similar instance types
+            hourly_rate = self._estimate_rds_instance_cost(instance_class, instance_pricing)
+        
+        # Double the cost for Multi-AZ
+        if multi_az:
+            hourly_rate *= 2
+        
+        instance_monthly_cost = hourly_rate * self.hours_per_month
+        
+        # Calculate storage cost
+        storage_pricing = pricing.get('storage', {})
+        storage_price_per_gb = storage_pricing.get(storage_type, 0.115)  # Default gp2 price
+        storage_monthly_cost = storage_price_per_gb * allocated_storage
+        
+        # Double storage cost for Multi-AZ
+        if multi_az:
+            storage_monthly_cost *= 2
+        
+        total_monthly_cost = instance_monthly_cost + storage_monthly_cost
+        
+        logger.debug(f"RDS cost for {instance_class} ({engine}) in {region}: ${total_monthly_cost:.2f}/month")
+        
+        return total_monthly_cost
+    
+    def _estimate_rds_instance_cost(self, instance_class, pricing):
+        """
+        Estimate RDS instance cost based on instance family
+        
+        Args:
+            instance_class (str): RDS instance class
+            pricing (dict): Pricing data
+            
+        Returns:
+            float: Estimated hourly rate
+        """
+        # Extract instance family (e.g., 'db.t3' from 'db.t3.large')
+        parts = instance_class.split('.')
+        if len(parts) >= 2:
+            family = f"{parts[0]}.{parts[1]}"
+        else:
+            family = instance_class
+        
+        # Look for similar instances in the same family
+        for known_type, rate in pricing.items():
+            if known_type.startswith(family):
+                logger.warning(f"Using approximate pricing for {instance_class} based on {known_type}")
+                return rate
+        
+        # Default fallback
+        logger.warning(f"No pricing data found for {instance_class}, using default rate")
+        return 0.017  # Default to db.t3.micro rate
+    
     def _estimate_instance_cost(self, instance_type, pricing):
         """
         Estimate instance cost based on instance family

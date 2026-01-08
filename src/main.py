@@ -16,6 +16,8 @@ from rich.panel import Panel
 from analyzers.ec2_analyzer import EC2Analyzer
 from analyzers.ebs_analyzer import EBSAnalyzer
 from analyzers.snapshot_analyzer import SnapshotAnalyzer
+from analyzers.eip_analyzer import EIPAnalyzer
+from analyzers.rds_analyzer import RDSAnalyzer
 from utils.config_loader import ConfigLoader
 from utils.aws_client import AWSClientManager
 from reports.json_reporter import JSONReporter
@@ -85,7 +87,7 @@ def print_summary(results):
 @click.option('--region', '-r', default=None, help='AWS region to analyze')
 @click.option('--all-regions', is_flag=True, help='Analyze all available regions')
 @click.option('--resource-type', '-t', 
-              type=click.Choice(['ec2', 'ebs', 'snapshots', 'all']), 
+              type=click.Choice(['ec2', 'ebs', 'snapshots', 'eip', 'rds', 'all']), 
               default='all', 
               help='Type of resources to analyze')
 @click.option('--dry-run', is_flag=True, help='Run in dry-run mode (no changes)')
@@ -169,6 +171,21 @@ def main(config, profile, region, all_regions, resource_type, dry_run, output_fo
                     snapshot_analyzer = SnapshotAnalyzer(ec2_client, app_config)
                     region_results['outdated_snapshots'] = snapshot_analyzer.analyze()
                     console.print(f"✓ Found {len(region_results['outdated_snapshots']['resources'])} outdated snapshots")
+            
+            # Run Elastic IP analysis
+            if resource_type in ['eip', 'all']:
+                with console.status("[bold green]Analyzing Elastic IPs..."):
+                    eip_analyzer = EIPAnalyzer(ec2_client, app_config)
+                    region_results['unused_elastic_ips'] = eip_analyzer.analyze()
+                    console.print(f"✓ Found {len(region_results['unused_elastic_ips']['resources'])} unused Elastic IPs")
+            
+            # Run RDS analysis
+            if resource_type in ['rds', 'all']:
+                with console.status("[bold green]Analyzing RDS instances..."):
+                    rds_client = aws_manager.get_client('rds', aws_region)
+                    rds_analyzer = RDSAnalyzer(rds_client, cloudwatch_client, app_config)
+                    region_results['idle_rds_instances'] = rds_analyzer.analyze()
+                    console.print(f"✓ Found {len(region_results['idle_rds_instances']['resources'])} idle RDS instances")
             
             all_results[aws_region] = region_results
         
