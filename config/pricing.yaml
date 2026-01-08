@@ -1,13 +1,17 @@
 # AWS Pricing Data (Monthly Rates in USD)
 # Last Updated: January 2026
 # Note: These are approximate values. Use AWS Pricing API for exact pricing.
+# Covers all major AWS regions for accurate cost estimation globally.
 
 regions:
+  # ============================================================================
+  # NORTH AMERICA
+  # ============================================================================
+  
   us-east-1:
     name: "US East (N. Virginia)"
     
     ec2:
-      # Instance pricing per hour
       t2.micro: 0.0116
       t2.small: 0.023
       t2.medium: 0.0464
@@ -16,12 +20,20 @@ regions:
       t3.small: 0.0208
       t3.medium: 0.0416
       t3.large: 0.0832
+      t3.xlarge: 0.1664
+      t3.2xlarge: 0.3328
       m5.large: 0.096
       m5.xlarge: 0.192
       m5.2xlarge: 0.384
+      m5.4xlarge: 0.768
+      m6i.large: 0.096
+      m6i.xlarge: 0.192
+      r5.large: 0.126
+      r5.xlarge: 0.252
+      c5.large: 0.085
+      c5.xlarge: 0.17
       
     ebs:
-      # EBS pricing per GB-month
       gp3: 0.08
       gp2: 0.10
       io1: 0.125
@@ -31,15 +43,12 @@ regions:
       standard: 0.05
       
     snapshots:
-      # Snapshot pricing per GB-month
       standard: 0.05
     
     elastic_ip:
-      # Elastic IP pricing per hour (when not associated)
       unassociated: 0.005
     
     rds:
-      # RDS instance pricing per hour
       instances:
         db.t3.micro: 0.017
         db.t3.small: 0.034
@@ -50,14 +59,108 @@ regions:
         db.m5.large: 0.171
         db.m5.xlarge: 0.342
         db.m5.2xlarge: 0.684
+        db.m6i.large: 0.171
+        db.m6i.xlarge: 0.342
         db.r5.large: 0.24
         db.r5.xlarge: 0.48
-      # RDS storage pricing per GB-month
+        db.r6i.large: 0.24
       storage:
         gp2: 0.115
         gp3: 0.08
         io1: 0.125
         magnetic: 0.10
+        
+  us-east-2:
+    name: "US East (Ohio)"
+    
+    ec2:
+      t2.micro: 0.0116
+      t2.small: 0.023
+      t2.medium: 0.0464
+      t2.large: 0.0928
+      t3.micro: 0.0104
+      t3.small: 0.0208
+      t3.medium: 0.0416
+      t3.large: 0.0832
+      t3.xlarge: 0.1664
+      m5.large: 0.096
+      m5.xlarge: 0.192
+      m5.2xlarge: 0.384
+      m6i.large: 0.096
+      r5.large: 0.126
+      c5.large: 0.085
+      
+    ebs:
+      gp3: 0.08
+      gp2: 0.10
+      io1: 0.125
+      st1: 0.045
+      sc1: 0.025
+      
+    snapshots:
+      standard: 0.05
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.017
+        db.t3.small: 0.034
+        db.t3.medium: 0.068
+        db.t3.large: 0.136
+        db.m5.large: 0.171
+        db.m5.xlarge: 0.342
+        db.r5.large: 0.24
+      storage:
+        gp2: 0.115
+        gp3: 0.08
+        io1: 0.125
+        
+  us-west-1:
+    name: "US West (N. California)"
+    
+    ec2:
+      t2.micro: 0.0139
+      t2.small: 0.0278
+      t2.medium: 0.0556
+      t2.large: 0.1112
+      t3.micro: 0.0124
+      t3.small: 0.0248
+      t3.medium: 0.0496
+      t3.large: 0.0992
+      m5.large: 0.114
+      m5.xlarge: 0.228
+      m5.2xlarge: 0.456
+      r5.large: 0.151
+      c5.large: 0.102
+      
+    ebs:
+      gp3: 0.096
+      gp2: 0.12
+      io1: 0.138
+      st1: 0.054
+      sc1: 0.030
+      
+    snapshots:
+      standard: 0.055
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.020
+        db.t3.small: 0.040
+        db.t3.medium: 0.081
+        db.t3.large: 0.162
+        db.m5.large: 0.205
+        db.m5.xlarge: 0.410
+        db.r5.large: 0.288
+      storage:
+        gp2: 0.138
+        gp3: 0.096
+        io1: 0.150
         
   us-west-2:
     name: "US West (Oregon)"
@@ -71,18 +174,20 @@ regions:
       t3.small: 0.0208
       t3.medium: 0.0416
       t3.large: 0.0832
+      t3.xlarge: 0.1664
       m5.large: 0.096
       m5.xlarge: 0.192
       m5.2xlarge: 0.384
+      m6i.large: 0.096
+      r5.large: 0.126
+      c5.large: 0.085
       
     ebs:
       gp3: 0.08
       gp2: 0.10
       io1: 0.125
-      io2: 0.125
       st1: 0.045
       sc1: 0.025
-      standard: 0.05
       
     snapshots:
       standard: 0.05
@@ -104,6 +209,53 @@ regions:
         gp3: 0.08
         io1: 0.125
 
+  ca-central-1:
+    name: "Canada (Central)"
+    
+    ec2:
+      t2.micro: 0.0128
+      t2.small: 0.0255
+      t2.medium: 0.051
+      t2.large: 0.102
+      t3.micro: 0.0114
+      t3.small: 0.0228
+      t3.medium: 0.0456
+      t3.large: 0.0912
+      m5.large: 0.106
+      m5.xlarge: 0.211
+      r5.large: 0.139
+      c5.large: 0.094
+      
+    ebs:
+      gp3: 0.088
+      gp2: 0.11
+      io1: 0.138
+      st1: 0.05
+      sc1: 0.028
+      
+    snapshots:
+      standard: 0.055
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.019
+        db.t3.small: 0.037
+        db.t3.medium: 0.075
+        db.t3.large: 0.150
+        db.m5.large: 0.188
+        db.r5.large: 0.264
+      storage:
+        gp2: 0.127
+        gp3: 0.088
+        io1: 0.138
+
+  # ============================================================================
+  # EUROPE
+  # ============================================================================
+  
   eu-west-1:
     name: "EU (Ireland)"
     
@@ -116,9 +268,13 @@ regions:
       t3.small: 0.0228
       t3.medium: 0.0456
       t3.large: 0.0912
+      t3.xlarge: 0.1824
       m5.large: 0.107
       m5.xlarge: 0.214
       m5.2xlarge: 0.428
+      m6i.large: 0.107
+      r5.large: 0.141
+      c5.large: 0.096
       
     ebs:
       gp3: 0.088
@@ -149,23 +305,966 @@ regions:
         gp3: 0.088
         io1: 0.138
 
-# Default values if region not found
+  eu-west-2:
+    name: "EU (London)"
+    
+    ec2:
+      t2.micro: 0.0132
+      t2.small: 0.0264
+      t2.medium: 0.0528
+      t2.large: 0.1056
+      t3.micro: 0.0118
+      t3.small: 0.0236
+      t3.medium: 0.0472
+      t3.large: 0.0944
+      m5.large: 0.111
+      m5.xlarge: 0.222
+      r5.large: 0.146
+      c5.large: 0.099
+      
+    ebs:
+      gp3: 0.092
+      gp2: 0.116
+      io1: 0.145
+      st1: 0.053
+      sc1: 0.029
+      
+    snapshots:
+      standard: 0.058
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.020
+        db.t3.small: 0.040
+        db.t3.medium: 0.080
+        db.t3.large: 0.160
+        db.m5.large: 0.200
+        db.r5.large: 0.282
+      storage:
+        gp2: 0.133
+        gp3: 0.092
+        io1: 0.145
+
+  eu-west-3:
+    name: "EU (Paris)"
+    
+    ec2:
+      t2.micro: 0.0132
+      t2.small: 0.0264
+      t2.medium: 0.0528
+      t2.large: 0.1056
+      t3.micro: 0.0118
+      t3.small: 0.0236
+      t3.medium: 0.0472
+      t3.large: 0.0944
+      m5.large: 0.111
+      m5.xlarge: 0.222
+      r5.large: 0.146
+      c5.large: 0.099
+      
+    ebs:
+      gp3: 0.092
+      gp2: 0.116
+      io1: 0.145
+      st1: 0.053
+      sc1: 0.029
+      
+    snapshots:
+      standard: 0.058
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.020
+        db.t3.small: 0.040
+        db.t3.medium: 0.080
+        db.t3.large: 0.160
+        db.m5.large: 0.200
+        db.r5.large: 0.282
+      storage:
+        gp2: 0.133
+        gp3: 0.092
+        io1: 0.145
+
+  eu-central-1:
+    name: "EU (Frankfurt)"
+    
+    ec2:
+      t2.micro: 0.0134
+      t2.small: 0.0268
+      t2.medium: 0.0536
+      t2.large: 0.1072
+      t3.micro: 0.0120
+      t3.small: 0.0240
+      t3.medium: 0.0480
+      t3.large: 0.0960
+      t3.xlarge: 0.1920
+      m5.large: 0.115
+      m5.xlarge: 0.230
+      m5.2xlarge: 0.460
+      m6i.large: 0.115
+      r5.large: 0.152
+      c5.large: 0.103
+      
+    ebs:
+      gp3: 0.0952
+      gp2: 0.119
+      io1: 0.149
+      st1: 0.054
+      sc1: 0.030
+      
+    snapshots:
+      standard: 0.054
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.020
+        db.t3.small: 0.041
+        db.t3.medium: 0.082
+        db.t3.large: 0.164
+        db.m5.large: 0.206
+        db.m5.xlarge: 0.412
+        db.r5.large: 0.29
+      storage:
+        gp2: 0.136
+        gp3: 0.095
+        io1: 0.149
+
+  eu-central-2:
+    name: "EU (Zurich)"
+    
+    ec2:
+      t3.micro: 0.0132
+      t3.small: 0.0264
+      t3.medium: 0.0528
+      t3.large: 0.1056
+      m5.large: 0.127
+      m5.xlarge: 0.253
+      r5.large: 0.167
+      c5.large: 0.113
+      
+    ebs:
+      gp3: 0.105
+      gp2: 0.131
+      io1: 0.164
+      st1: 0.059
+      sc1: 0.033
+      
+    snapshots:
+      standard: 0.059
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.022
+        db.t3.small: 0.045
+        db.t3.medium: 0.090
+        db.t3.large: 0.180
+        db.m5.large: 0.227
+        db.r5.large: 0.32
+      storage:
+        gp2: 0.150
+        gp3: 0.105
+        io1: 0.164
+
+  eu-north-1:
+    name: "EU (Stockholm)"
+    
+    ec2:
+      t3.micro: 0.0108
+      t3.small: 0.0216
+      t3.medium: 0.0432
+      t3.large: 0.0864
+      m5.large: 0.102
+      m5.xlarge: 0.204
+      r5.large: 0.134
+      c5.large: 0.091
+      
+    ebs:
+      gp3: 0.0836
+      gp2: 0.1045
+      io1: 0.131
+      st1: 0.047
+      sc1: 0.026
+      
+    snapshots:
+      standard: 0.0475
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.018
+        db.t3.small: 0.036
+        db.t3.medium: 0.073
+        db.t3.large: 0.146
+        db.m5.large: 0.183
+        db.r5.large: 0.258
+      storage:
+        gp2: 0.120
+        gp3: 0.084
+        io1: 0.131
+
+  eu-south-1:
+    name: "EU (Milan)"
+    
+    ec2:
+      t3.micro: 0.0124
+      t3.small: 0.0248
+      t3.medium: 0.0496
+      t3.large: 0.0992
+      m5.large: 0.118
+      m5.xlarge: 0.236
+      r5.large: 0.156
+      c5.large: 0.105
+      
+    ebs:
+      gp3: 0.0972
+      gp2: 0.1215
+      io1: 0.152
+      st1: 0.055
+      sc1: 0.030
+      
+    snapshots:
+      standard: 0.055
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.021
+        db.t3.small: 0.042
+        db.t3.medium: 0.084
+        db.t3.large: 0.168
+        db.m5.large: 0.212
+        db.r5.large: 0.298
+      storage:
+        gp2: 0.139
+        gp3: 0.097
+        io1: 0.152
+
+  eu-south-2:
+    name: "EU (Spain)"
+    
+    ec2:
+      t3.micro: 0.0124
+      t3.small: 0.0248
+      t3.medium: 0.0496
+      t3.large: 0.0992
+      m5.large: 0.118
+      m5.xlarge: 0.236
+      r5.large: 0.156
+      c5.large: 0.105
+      
+    ebs:
+      gp3: 0.0972
+      gp2: 0.1215
+      io1: 0.152
+      st1: 0.055
+      sc1: 0.030
+      
+    snapshots:
+      standard: 0.055
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.021
+        db.t3.small: 0.042
+        db.t3.medium: 0.084
+        db.t3.large: 0.168
+        db.m5.large: 0.212
+        db.r5.large: 0.298
+      storage:
+        gp2: 0.139
+        gp3: 0.097
+        io1: 0.152
+
+  # ============================================================================
+  # ASIA PACIFIC
+  # ============================================================================
+  
+  ap-southeast-1:
+    name: "Asia Pacific (Singapore)"
+    
+    ec2:
+      t2.micro: 0.0134
+      t2.small: 0.0268
+      t2.medium: 0.0536
+      t2.large: 0.1072
+      t3.micro: 0.0132
+      t3.small: 0.0264
+      t3.medium: 0.0528
+      t3.large: 0.1056
+      t3.xlarge: 0.2112
+      m5.large: 0.122
+      m5.xlarge: 0.244
+      m5.2xlarge: 0.488
+      m6i.large: 0.122
+      r5.large: 0.16
+      c5.large: 0.109
+      
+    ebs:
+      gp3: 0.096
+      gp2: 0.12
+      io1: 0.138
+      st1: 0.054
+      sc1: 0.030
+      
+    snapshots:
+      standard: 0.055
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.022
+        db.t3.small: 0.044
+        db.t3.medium: 0.088
+        db.t3.large: 0.176
+        db.m5.large: 0.218
+        db.m5.xlarge: 0.436
+        db.r5.large: 0.306
+      storage:
+        gp2: 0.138
+        gp3: 0.096
+        io1: 0.138
+
+  ap-southeast-2:
+    name: "Asia Pacific (Sydney)"
+    
+    ec2:
+      t2.micro: 0.0146
+      t2.small: 0.0292
+      t2.medium: 0.0584
+      t2.large: 0.1168
+      t3.micro: 0.0132
+      t3.small: 0.0264
+      t3.medium: 0.0528
+      t3.large: 0.1056
+      m5.large: 0.122
+      m5.xlarge: 0.244
+      r5.large: 0.16
+      c5.large: 0.109
+      
+    ebs:
+      gp3: 0.096
+      gp2: 0.12
+      io1: 0.138
+      st1: 0.054
+      sc1: 0.030
+      
+    snapshots:
+      standard: 0.055
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.022
+        db.t3.small: 0.044
+        db.t3.medium: 0.088
+        db.t3.large: 0.176
+        db.m5.large: 0.218
+        db.r5.large: 0.306
+      storage:
+        gp2: 0.138
+        gp3: 0.096
+        io1: 0.138
+
+  ap-southeast-3:
+    name: "Asia Pacific (Jakarta)"
+    
+    ec2:
+      t3.micro: 0.0132
+      t3.small: 0.0264
+      t3.medium: 0.0528
+      t3.large: 0.1056
+      m5.large: 0.122
+      m5.xlarge: 0.244
+      r5.large: 0.16
+      c5.large: 0.109
+      
+    ebs:
+      gp3: 0.096
+      gp2: 0.12
+      io1: 0.138
+      st1: 0.054
+      sc1: 0.030
+      
+    snapshots:
+      standard: 0.055
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.022
+        db.t3.small: 0.044
+        db.t3.medium: 0.088
+        db.t3.large: 0.176
+        db.m5.large: 0.218
+        db.r5.large: 0.306
+      storage:
+        gp2: 0.138
+        gp3: 0.096
+        io1: 0.138
+
+  ap-southeast-4:
+    name: "Asia Pacific (Melbourne)"
+    
+    ec2:
+      t3.micro: 0.0145
+      t3.small: 0.0290
+      t3.medium: 0.0580
+      t3.large: 0.1160
+      m5.large: 0.134
+      m5.xlarge: 0.268
+      r5.large: 0.176
+      c5.large: 0.120
+      
+    ebs:
+      gp3: 0.106
+      gp2: 0.132
+      io1: 0.152
+      st1: 0.059
+      sc1: 0.033
+      
+    snapshots:
+      standard: 0.061
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.024
+        db.t3.small: 0.048
+        db.t3.medium: 0.097
+        db.t3.large: 0.194
+        db.m5.large: 0.240
+        db.r5.large: 0.336
+      storage:
+        gp2: 0.152
+        gp3: 0.106
+        io1: 0.152
+
+  ap-northeast-1:
+    name: "Asia Pacific (Tokyo)"
+    
+    ec2:
+      t2.micro: 0.0152
+      t2.small: 0.0304
+      t2.medium: 0.0608
+      t2.large: 0.1216
+      t3.micro: 0.0136
+      t3.small: 0.0272
+      t3.medium: 0.0544
+      t3.large: 0.1088
+      t3.xlarge: 0.2176
+      m5.large: 0.124
+      m5.xlarge: 0.248
+      m5.2xlarge: 0.496
+      m6i.large: 0.124
+      r5.large: 0.164
+      c5.large: 0.112
+      
+    ebs:
+      gp3: 0.096
+      gp2: 0.12
+      io1: 0.142
+      st1: 0.054
+      sc1: 0.030
+      
+    snapshots:
+      standard: 0.055
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.023
+        db.t3.small: 0.046
+        db.t3.medium: 0.092
+        db.t3.large: 0.184
+        db.m5.large: 0.228
+        db.m5.xlarge: 0.456
+        db.r5.large: 0.32
+      storage:
+        gp2: 0.138
+        gp3: 0.096
+        io1: 0.142
+
+  ap-northeast-2:
+    name: "Asia Pacific (Seoul)"
+    
+    ec2:
+      t2.micro: 0.0144
+      t2.small: 0.0288
+      t2.medium: 0.0576
+      t2.large: 0.1152
+      t3.micro: 0.0130
+      t3.small: 0.0260
+      t3.medium: 0.0520
+      t3.large: 0.1040
+      m5.large: 0.118
+      m5.xlarge: 0.236
+      r5.large: 0.156
+      c5.large: 0.106
+      
+    ebs:
+      gp3: 0.0912
+      gp2: 0.114
+      io1: 0.1278
+      st1: 0.051
+      sc1: 0.029
+      
+    snapshots:
+      standard: 0.0513
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.022
+        db.t3.small: 0.044
+        db.t3.medium: 0.088
+        db.t3.large: 0.176
+        db.m5.large: 0.212
+        db.r5.large: 0.298
+      storage:
+        gp2: 0.131
+        gp3: 0.091
+        io1: 0.128
+
+  ap-northeast-3:
+    name: "Asia Pacific (Osaka)"
+    
+    ec2:
+      t3.micro: 0.0136
+      t3.small: 0.0272
+      t3.medium: 0.0544
+      t3.large: 0.1088
+      m5.large: 0.124
+      m5.xlarge: 0.248
+      r5.large: 0.164
+      c5.large: 0.112
+      
+    ebs:
+      gp3: 0.096
+      gp2: 0.12
+      io1: 0.142
+      st1: 0.054
+      sc1: 0.030
+      
+    snapshots:
+      standard: 0.055
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.023
+        db.t3.small: 0.046
+        db.t3.medium: 0.092
+        db.t3.large: 0.184
+        db.m5.large: 0.228
+        db.r5.large: 0.32
+      storage:
+        gp2: 0.138
+        gp3: 0.096
+        io1: 0.142
+
+  ap-south-1:
+    name: "Asia Pacific (Mumbai)"
+    
+    ec2:
+      t2.micro: 0.0116
+      t2.small: 0.0232
+      t2.medium: 0.0464
+      t2.large: 0.0928
+      t3.micro: 0.0104
+      t3.small: 0.0208
+      t3.medium: 0.0416
+      t3.large: 0.0832
+      t3.xlarge: 0.1664
+      m5.large: 0.096
+      m5.xlarge: 0.192
+      m5.2xlarge: 0.384
+      m6i.large: 0.096
+      r5.large: 0.126
+      c5.large: 0.085
+      
+    ebs:
+      gp3: 0.0912
+      gp2: 0.114
+      io1: 0.131
+      st1: 0.051
+      sc1: 0.029
+      
+    snapshots:
+      standard: 0.051
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.018
+        db.t3.small: 0.036
+        db.t3.medium: 0.072
+        db.t3.large: 0.144
+        db.m5.large: 0.178
+        db.m5.xlarge: 0.356
+        db.r5.large: 0.25
+      storage:
+        gp2: 0.131
+        gp3: 0.091
+        io1: 0.131
+
+  ap-south-2:
+    name: "Asia Pacific (Hyderabad)"
+    
+    ec2:
+      t3.micro: 0.0104
+      t3.small: 0.0208
+      t3.medium: 0.0416
+      t3.large: 0.0832
+      m5.large: 0.096
+      m5.xlarge: 0.192
+      r5.large: 0.126
+      c5.large: 0.085
+      
+    ebs:
+      gp3: 0.0912
+      gp2: 0.114
+      io1: 0.131
+      st1: 0.051
+      sc1: 0.029
+      
+    snapshots:
+      standard: 0.051
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.018
+        db.t3.small: 0.036
+        db.t3.medium: 0.072
+        db.t3.large: 0.144
+        db.m5.large: 0.178
+        db.r5.large: 0.25
+      storage:
+        gp2: 0.131
+        gp3: 0.091
+        io1: 0.131
+
+  ap-east-1:
+    name: "Asia Pacific (Hong Kong)"
+    
+    ec2:
+      t3.micro: 0.0152
+      t3.small: 0.0304
+      t3.medium: 0.0608
+      t3.large: 0.1216
+      m5.large: 0.141
+      m5.xlarge: 0.282
+      r5.large: 0.186
+      c5.large: 0.127
+      
+    ebs:
+      gp3: 0.1104
+      gp2: 0.138
+      io1: 0.159
+      st1: 0.062
+      sc1: 0.034
+      
+    snapshots:
+      standard: 0.062
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.026
+        db.t3.small: 0.052
+        db.t3.medium: 0.104
+        db.t3.large: 0.208
+        db.m5.large: 0.252
+        db.r5.large: 0.354
+      storage:
+        gp2: 0.158
+        gp3: 0.110
+        io1: 0.159
+
+  # ============================================================================
+  # SOUTH AMERICA
+  # ============================================================================
+  
+  sa-east-1:
+    name: "South America (São Paulo)"
+    
+    ec2:
+      t2.micro: 0.0186
+      t2.small: 0.0372
+      t2.medium: 0.0744
+      t2.large: 0.1488
+      t3.micro: 0.0166
+      t3.small: 0.0332
+      t3.medium: 0.0664
+      t3.large: 0.1328
+      t3.xlarge: 0.2656
+      m5.large: 0.152
+      m5.xlarge: 0.304
+      m5.2xlarge: 0.608
+      r5.large: 0.202
+      c5.large: 0.137
+      
+    ebs:
+      gp3: 0.128
+      gp2: 0.16
+      io1: 0.2
+      st1: 0.072
+      sc1: 0.04
+      
+    snapshots:
+      standard: 0.068
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.028
+        db.t3.small: 0.056
+        db.t3.medium: 0.112
+        db.t3.large: 0.224
+        db.m5.large: 0.274
+        db.m5.xlarge: 0.548
+        db.r5.large: 0.386
+      storage:
+        gp2: 0.184
+        gp3: 0.128
+        io1: 0.200
+
+  # ============================================================================
+  # MIDDLE EAST & AFRICA
+  # ============================================================================
+  
+  me-south-1:
+    name: "Middle East (Bahrain)"
+    
+    ec2:
+      t3.micro: 0.0145
+      t3.small: 0.0290
+      t3.medium: 0.0580
+      t3.large: 0.1160
+      m5.large: 0.134
+      m5.xlarge: 0.268
+      r5.large: 0.176
+      c5.large: 0.120
+      
+    ebs:
+      gp3: 0.1045
+      gp2: 0.1306
+      io1: 0.1507
+      st1: 0.059
+      sc1: 0.033
+      
+    snapshots:
+      standard: 0.059
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.024
+        db.t3.small: 0.048
+        db.t3.medium: 0.096
+        db.t3.large: 0.192
+        db.m5.large: 0.240
+        db.r5.large: 0.336
+      storage:
+        gp2: 0.150
+        gp3: 0.105
+        io1: 0.151
+
+  me-central-1:
+    name: "Middle East (UAE)"
+    
+    ec2:
+      t3.micro: 0.0145
+      t3.small: 0.0290
+      t3.medium: 0.0580
+      t3.large: 0.1160
+      m5.large: 0.134
+      m5.xlarge: 0.268
+      r5.large: 0.176
+      c5.large: 0.120
+      
+    ebs:
+      gp3: 0.1045
+      gp2: 0.1306
+      io1: 0.1507
+      st1: 0.059
+      sc1: 0.033
+      
+    snapshots:
+      standard: 0.059
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.024
+        db.t3.small: 0.048
+        db.t3.medium: 0.096
+        db.t3.large: 0.192
+        db.m5.large: 0.240
+        db.r5.large: 0.336
+      storage:
+        gp2: 0.150
+        gp3: 0.105
+        io1: 0.151
+
+  af-south-1:
+    name: "Africa (Cape Town)"
+    
+    ec2:
+      t3.micro: 0.0156
+      t3.small: 0.0312
+      t3.medium: 0.0624
+      t3.large: 0.1248
+      m5.large: 0.144
+      m5.xlarge: 0.288
+      r5.large: 0.19
+      c5.large: 0.129
+      
+    ebs:
+      gp3: 0.1128
+      gp2: 0.141
+      io1: 0.163
+      st1: 0.064
+      sc1: 0.035
+      
+    snapshots:
+      standard: 0.064
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.026
+        db.t3.small: 0.052
+        db.t3.medium: 0.104
+        db.t3.large: 0.208
+        db.m5.large: 0.260
+        db.r5.large: 0.364
+      storage:
+        gp2: 0.162
+        gp3: 0.113
+        io1: 0.163
+
+  il-central-1:
+    name: "Israel (Tel Aviv)"
+    
+    ec2:
+      t3.micro: 0.0140
+      t3.small: 0.0280
+      t3.medium: 0.0560
+      t3.large: 0.1120
+      m5.large: 0.129
+      m5.xlarge: 0.258
+      r5.large: 0.170
+      c5.large: 0.116
+      
+    ebs:
+      gp3: 0.101
+      gp2: 0.126
+      io1: 0.158
+      st1: 0.057
+      sc1: 0.032
+      
+    snapshots:
+      standard: 0.057
+
+    elastic_ip:
+      unassociated: 0.005
+
+    rds:
+      instances:
+        db.t3.micro: 0.023
+        db.t3.small: 0.046
+        db.t3.medium: 0.093
+        db.t3.large: 0.186
+        db.m5.large: 0.232
+        db.r5.large: 0.324
+      storage:
+        gp2: 0.144
+        gp3: 0.101
+        io1: 0.158
+
+# ============================================================================
+# DEFAULT VALUES (fallback for unlisted regions)
+# ============================================================================
+
 default:
   ec2:
     t2.micro: 0.0116
     t2.small: 0.023
     t2.medium: 0.0464
+    t2.large: 0.0928
     t3.micro: 0.0104
     t3.small: 0.0208
     t3.medium: 0.0416
+    t3.large: 0.0832
+    t3.xlarge: 0.1664
+    t3.2xlarge: 0.3328
     m5.large: 0.096
+    m5.xlarge: 0.192
+    m5.2xlarge: 0.384
+    m5.4xlarge: 0.768
+    m6i.large: 0.096
+    m6i.xlarge: 0.192
+    r5.large: 0.126
+    r5.xlarge: 0.252
+    c5.large: 0.085
+    c5.xlarge: 0.17
     
   ebs:
     gp3: 0.08
     gp2: 0.10
     io1: 0.125
+    io2: 0.125
     st1: 0.045
     sc1: 0.025
+    standard: 0.05
     
   snapshots:
     standard: 0.05
@@ -179,12 +1278,21 @@ default:
       db.t3.small: 0.034
       db.t3.medium: 0.068
       db.t3.large: 0.136
+      db.t3.xlarge: 0.272
+      db.t3.2xlarge: 0.544
       db.m5.large: 0.171
+      db.m5.xlarge: 0.342
+      db.m5.2xlarge: 0.684
+      db.m6i.large: 0.171
+      db.m6i.xlarge: 0.342
       db.r5.large: 0.24
+      db.r5.xlarge: 0.48
+      db.r6i.large: 0.24
     storage:
       gp2: 0.115
       gp3: 0.08
       io1: 0.125
+      magnetic: 0.10
 
 # Conversion factors
 hours_per_month: 730
