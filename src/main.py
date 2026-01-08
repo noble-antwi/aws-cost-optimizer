@@ -25,7 +25,8 @@ from reports.csv_reporter import CSVReporter
 from reports.html_reporter import HTMLReporter
 from notifications.slack_notifier import SlackNotifier
 
-console = Console()
+# Fix Windows console encoding issue with emojis
+console = Console(force_terminal=True, legacy_windows=False)
 
 
 def setup_logging(config):
