@@ -180,7 +180,7 @@ All reports are generated automatically and saved in timestamped directories:
 
 Get real-time alerts in Slack when the analysis completes! 🚀
 
-![Slack Notification](assets/images/07-integration-with-slack.png)
+![Slack Notification](assets/images/07_Slack_message.png)
 
 ### Setup Slack Webhook
 
