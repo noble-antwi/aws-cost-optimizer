@@ -162,6 +162,9 @@ class EC2Analyzer(BaseAnalyzer):
         instance_type = instance['InstanceType']
         region = self.client.meta.region_name
         
+        # Get average CPU utilization
+        avg_cpu = self._get_average_cpu_utilization(instance_id)
+        
         # Calculate cost
         monthly_cost = self.cost_calculator.calculate_ec2_cost(
             instance_type,
@@ -179,10 +182,11 @@ class EC2Analyzer(BaseAnalyzer):
             'region': region,
             'launch_time': instance['LaunchTime'].isoformat(),
             'state': instance['State']['Name'],
+            'average_cpu': avg_cpu if avg_cpu is not None else 0,
             'monthly_cost': monthly_cost,
             'tags': tags,
             'recommendation': f'Consider stopping or terminating this idle instance to save ${monthly_cost:.2f}/month'
         }
         
         self.add_finding(resource_data)
-        logger.info(f"Found idle instance: {instance_id} ({instance_name}) - ${monthly_cost:.2f}/month")
+        logger.info(f"Found idle instance: {instance_id} ({instance_name}) - CPU: {avg_cpu:.2f}% - ${monthly_cost:.2f}/month")
